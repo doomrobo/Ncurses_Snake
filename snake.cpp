@@ -31,17 +31,7 @@ void Snake::fillBody(size_t len) {
 
 Snake::Snake(int color_pair, coordinates startPos, size_t startLength, 
              char startDirection, WINDOW* win) {
-/*
 
-    //segChar = 0x2588; // █ - full block char
-    segChar = 0x25A0; // ■ - square char
-     
-    headUp     = 0x25B2; // ▲ - up-pointing triangle
-    headDown   = 0x25BC; // ▼ - down-pointing triangle
-    headLeft   = 0x25C0; // ◀ - left-pointing triangle
-    headRight  = 0x25B6; // ▶ - right-pointing triangle
-
-*/
 	segChar    = ' ' | A_REVERSE;
 	headUp     = '^';
 	headDown   = 'v';
@@ -83,7 +73,6 @@ Snake::Snake(int color_pair, coordinates startPos, size_t startLength,
 			segmentOp = &Snake::coordRight;
 			break;
 		default:
-			std::cerr << "Invalid Input!\n";
 			exit(-1);
 			break;
 	}
@@ -108,19 +97,16 @@ void Snake::turn(char dir) {
 		case 'u':
 			if (direction != 'u' && direction != 'd') {
 				headChar = &headUp;
-				std::cerr << "Direction is up\n";
 				segmentOp = &Snake::coordUp;
 			}
 			break;
 		case 'd':
 			if (direction != 'u' && direction != 'd') {
-				std::cerr << "Down\n";
 				headChar = &headDown;
 				segmentOp = &Snake::coordDown;
 			}
 			break;
 		case 'l':
-			cerr << "Trying to move left\n";
 			if (direction != 'l' && direction != 'r') {
 				headChar = &headLeft;
 				segmentOp = &Snake::coordLeft;
@@ -165,4 +151,8 @@ void Snake::draw() {
 
 coordinates Snake::getHead() {
 	return head;
+}
+
+vector<coordinates> Snake::getSegments() {
+	return segments;
 }

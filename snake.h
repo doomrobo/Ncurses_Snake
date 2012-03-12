@@ -44,6 +44,7 @@ public:
 	void grow(size_t);
 	void draw();
 	coordinates getHead();
+	vector<coordinates> getSegments();
 };
 
 #endif /*SNAKE_H*/
