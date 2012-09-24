@@ -1,2 +1,2 @@
 all:
-	g++ main.cpp snake.cpp Food.cpp -lncurses
+	g++ main.cpp snake.cpp food.cpp -lncurses

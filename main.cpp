@@ -3,9 +3,10 @@
 #include <locale.h>
 #include <ctime>
 #include <cstdlib>
+#include <cmath>
 
 #include "snake.h"
-#include "Food.h"
+#include "food.h"
 
 int main() {
 	initscr();
@@ -27,14 +28,15 @@ int main() {
 	getmaxyx(stdscr, y, x);
 
 	Food food(food_color);
-	coordinates foodLocation = make_pair(20, 10);
+	coordinates foodLocation = make_pair(rand()%x, rand()%y);
 	food.setLocation(foodLocation);
     
-	Snake snake(snake_color, coordinates(10,10), 5, 'r');
+	Snake snake(snake_color, coordinates((int)x/2,(int)y/2), 5, 'r');
 	snake.draw();
 	refresh();
 	coordinates headPos = snake.getHead();
 	vector<coordinates> segments;
+	unsigned score = 0;
 
 	bool self_collision = false;
 
@@ -69,6 +71,7 @@ int main() {
 
 		if (headPos == foodLocation) {
 			snake.grow(1);
+			score++;
 			foodLocation = make_pair(rand()%x, rand()%y);
 			food.setLocation(foodLocation);
 		}
@@ -95,6 +98,11 @@ int main() {
 	}
 
 	nodelay(stdscr, false);
+	unsigned score_length;
+	if (score == 0) score_length = 1;
+	else score_length = (int)log10(score)+1;
+	mvprintw(y/2,(x/2)-(int)score_length/2-7, "Your score was %i", score);
+	refresh();
 	getch();
 
 	endwin();
